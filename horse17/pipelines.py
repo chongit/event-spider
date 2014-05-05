@@ -49,5 +49,6 @@ class MysqlStorePipeline(object):
             
     def _handle_err(self,failture,item,spider):
         """Handle occured on db interaction"""
+        print failture
         # just log
         log.err(failture)

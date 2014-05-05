@@ -39,21 +39,31 @@ class XiehuiSpider(CrawlSpider):
             i['title'] = row['exhibitName']
             i['city'] = row['cityDesc']
             i['address'] = row['exhibitLocation']
+            i['district'] = ''
             i['tags'] = row['keyWord']
+            i['image'] = row['exhibitIntroduceImage']
+            i['logo'] = row['exhibitImage']
+            i['performer'] = row['organizationFullName']
             event_id = row['exhibitId']
-            url = 'http://www.xiehui.com/events/'+str(event_id)+'/index.html'
+            url ='http://www.xiehui.com/events/'+str(event_id)+'/exhibitIntroduction.html'
             yield Request(url=url, method='get',meta={'item':i}, callback=self.parse_item)
         #return FormRequest(url='',formdata=formdata,callback=self.parse_item)
 
     def parse_item(self, response):
         sel = Selector(response)
         i = response.meta['item']
-        print response.url
-        i['logo'] =  sel.xpath('//div[@class="img_logo fl"]/img/@src').extract()[0]
-        i['performer'] = sel.xpath('//div[@class="part01-org l"]/p/text()').extract()[0]
-        i['organizer'] = ''
+        i['source_url'] = response.url
+        i['organizer'] = sel.xpath('//div[@class="part01-org l"]/p/text()').extract()[0]
         i['organizerlink'] = ''
-        timeboth = ''
+        i['description'] = sel.xpath('//div[@class="box02-detail l24 l"]').extract()[0]
+        #i['performer'] = ''
+        i['tel'] = sel.xpath('//div[@class="part01-org l"]/p[4]/text()').extract()[0] 
+        i['email'] = ''
+        i['qq'] = ''
+        i['weichat'] = ''
+        i['loop'] = ''
+        i['groups'] = ''
+        i['hot'] = '0'
         #i['domain_id'] = sel.xpath('//input[@id="sid"]/@value').extract()
         #i['name'] = sel.xpath('//div[@id="name"]').extract()
         #i['description'] = sel.xpath('//div[@id="description"]').extract()
