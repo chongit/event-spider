@@ -6,7 +6,6 @@ from scrapy import log
 class Horse17Pipeline(object):
     def process_item(self, item, spider):
         print 'pipeline processing'
-        print item['title']
         return item
 class MysqlStorePipeline(object):
     def __init__(self):
