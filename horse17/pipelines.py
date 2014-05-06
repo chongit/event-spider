@@ -2,6 +2,7 @@ from twisted.enterprise import adbapi
 import MySQLdb
 import MySQLdb.cursors
 from scrapy import log
+import time
 
 class Horse17Pipeline(object):
     def process_item(self, item, spider):
@@ -29,7 +30,7 @@ class MysqlStorePipeline(object):
                 where website = %s""",(item['source_url'],))
         print 'db writer processing'
         ret = conn.fetchone()
-        print ret
+        now = time.strftime('%Y-%m-%d %H:%M:%S')
         if ret:
             spider.log("Event has exists: [%s] <<< [%s] " 
                     % (item['title'], item['source_url']))
@@ -37,14 +38,14 @@ class MysqlStorePipeline(object):
             conn.execute("""INSERT INTO event (logo,title,performer,organizer,
                     organizerlink,starttime,endtime,desctiption,city,district,
                     address,images,tags,tel,email,website,qq,weichat,`loop`,groups
-                    ,hot) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                    %s,%s,%s,%s,%s,%s,%s,%s)""",
+                    ,hot,lastupdate) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+                    %s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                     (item['logo'],item['title'],item['performer'],item['organizer'],
                     item['organizerlink'],item['starttime'],item['endtime'],
                     item['description'],item['city'],item['district'],
                     item['address'],item['image'],item['tags'],item['tel'],
                     item['email'],item['source_url'],item['qq'],item['weichat'],
-                    item['loop'],item['groups'],item['hot']))
+                    item['loop'],item['groups'],item['hot'],now))
             
     def _handle_err(self,failture,item,spider):
         """Handle occured on db interaction"""
