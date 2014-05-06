@@ -27,7 +27,7 @@ class MysqlStorePipeline(object):
         """Perform an insert or update"""
         conn.execute("""select * from event 
                 where website = %s""",(item['source_url'],))
-        print 'interaction processing'
+        print 'db writer processing'
         ret = conn.fetchone()
         print ret
         if ret:
@@ -48,6 +48,5 @@ class MysqlStorePipeline(object):
             
     def _handle_err(self,failture,item,spider):
         """Handle occured on db interaction"""
-        print failture
         # just log
         log.err(failture)
