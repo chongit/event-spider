@@ -4,10 +4,19 @@ import MySQLdb.cursors
 from scrapy import log
 import time
 
+class DropIfExpiredPipeline(object):
+    def process_item(self, item, spider):
+        #TODO expired?
+        if all(item.values())):
+            raise DropItem()
+        else:
+            return item
+
 class Horse17Pipeline(object):
     def process_item(self, item, spider):
         print 'pipeline processing'
         return item
+
 class MysqlStorePipeline(object):
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
