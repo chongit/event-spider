@@ -41,8 +41,8 @@ class XiehuiSpider(CrawlSpider):
             i['address'] = row['exhibitLocation']
             i['district'] = ''
             i['tags'] = row['keyWord']
-            i['image'] = row['exhibitIntroduceImage']
-            i['logo'] = row['exhibitImage']
+            i['image'] = 'http://183.61.244.187:8084' + row['exhibitIntroduceImage']
+            i['logo'] = 'http://183.61.244.187:8084' + row['exhibitImage']
             i['performer'] = row['organizationFullName']
             event_id = row['exhibitId']
             url ='http://www.xiehui.com/events/'+str(event_id)+'/exhibitIntroduction.html'

@@ -7,7 +7,7 @@ import time
 class DropIfExpiredPipeline(object):
     def process_item(self, item, spider):
         #TODO expired?
-        if all(item.values())):
+        if all(item.values()):
             raise DropItem()
         else:
             return item
