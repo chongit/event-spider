@@ -43,7 +43,7 @@ class XiehuiSpider(CrawlSpider):
             i['tags'] = row['keyWord']
             i['image'] = 'http://183.61.244.187:8084' + row['exhibitIntroduceImage']
             i['logo'] = 'http://183.61.244.187:8084' + row['exhibitImage']
-            i['performer'] = row['organizationFullName']
+            #i['performer'] = row['organizationFullName']
             event_id = row['exhibitId']
             url ='http://www.xiehui.com/events/'+str(event_id)+'/exhibitIntroduction.html'
             yield Request(url=url, method='get',meta={'item':i}, callback=self.parse_item)
@@ -55,8 +55,8 @@ class XiehuiSpider(CrawlSpider):
         i['source_url'] = response.url
         i['organizer'] = sel.xpath('//div[@class="part01-org l"]/p/text()').extract()[0]
         i['organizerlink'] = ''
-        i['description'] = sel.xpath('//div[@class="box02-detail l24 l"]').extract()[0]
-        #i['performer'] = ''
+        i['description'] = sel.xpath('//div[@class="box02-detail l24 l"]/p/text()').extract()[0]
+        i['performer'] = ''
         i['tel'] = sel.xpath('//div[@class="part01-org l"]/p[4]/text()').extract()[0] 
         i['email'] = ''
         i['qq'] = ''
