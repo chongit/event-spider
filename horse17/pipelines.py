@@ -11,6 +11,14 @@ class DropIfExpiredPipeline(object):
             raise DropItem()
         else:
             return item
+class ReplaceInvalidCharaterPipeline(object):
+    def process_item(self, item, spider):
+        #Replace '"' to empty on all fields
+        print 'replace invalid pipeline processing'
+        for k in item.fields.iterkeys(): 
+            item[k] = item[k].replace('"','')
+        return item
+
 
 class Horse17Pipeline(object):
     def process_item(self, item, spider):

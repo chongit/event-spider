@@ -12,7 +12,7 @@ SPIDER_MODULES = ['horse17.spiders']
 NEWSPIDER_MODULE = 'horse17.spiders'
 
 ITEM_PIPELINES = {
-    'horse17.pipelines.Horse17Pipeline':100,
+    'horse17.pipelines.ReplaceInvalidCharaterPipeline':100,
     'horse17.pipelines.MysqlStorePipeline':200
 }
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
