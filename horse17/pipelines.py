@@ -3,6 +3,7 @@ import MySQLdb
 import MySQLdb.cursors
 from scrapy import log
 import time
+from scrapy.exceptions import DropItem
 
 class DropIfExpiredPipeline(object):
     def process_item(self, item, spider):
@@ -17,6 +18,8 @@ class ReplaceInvalidCharaterPipeline(object):
         print 'replace invalid pipeline processing'
         for k in item.fields.iterkeys(): 
             item[k] = item[k].replace('"','')
+        if len(item['city'])==0 or len(item['description'])==0:
+            raise DropItem()
         return item
 
 
