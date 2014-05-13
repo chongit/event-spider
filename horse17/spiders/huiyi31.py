@@ -66,14 +66,18 @@ class Huiyi31Spider(CrawlSpider):
             endtime = enddaytime[6:11]
             endyear = startmonth[0:4]
             end = endyear+'-'+endmonth.replace('/','-')+' '+endtime+':00'
-        i['starttime'] = start
-        i['endtime'] = end
+        i['starttime'] = start.replace('00:00:00','09:00:00')
+        i['endtime'] = end.replace('00:00:00','16:00:00')
         address = sel.xpath('//div[@class="address"]/span//text()').extract()[0].split(' ',1)
         if(len(address) > 1):
             i['city'] = address[0]
+        else:
+            if len(address)>2:
+                i['city'] = address[0:2]
         i['performer'] = ''
         #txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('//p/text()').extract()
-        txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('div/text()|p/text()').extract()
+        #txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('div/text()|p/text()').extract()
+        txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('descendant-or-self::*/text()').extract()
         i['description'] = '\n'.join(txt)
         i['district'] = ''
         i['image'] = ''
