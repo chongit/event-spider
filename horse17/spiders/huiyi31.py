@@ -72,7 +72,8 @@ class Huiyi31Spider(CrawlSpider):
         if(len(address) > 1):
             i['city'] = address[0]
         i['performer'] = ''
-        txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('p/text()').extract()
+        #txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('//p/text()').extract()
+        txt = sel.xpath('//div[@class="realcontent"]')[0].xpath('div/text()|p/text()').extract()
         i['description'] = '\n'.join(txt)
         i['district'] = ''
         i['image'] = ''
